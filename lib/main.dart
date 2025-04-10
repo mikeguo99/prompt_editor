@@ -328,15 +328,24 @@ class _PromptEditorHomeState extends State<PromptEditorHome> {
                             fontSize: 18, fontWeight: FontWeight.bold)),
                     const SizedBox(height: 16),
                     const Text('Prompt Template:'),
-                    TextField(
-                      controller: templateController,
-                      maxLines: null,
-                      minLines: 5,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: '输入模板，使用 {变量名} 作为占位符',
+                    Container(
+                      height: 150, // 固定高度，大约5行
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey.shade400),
+                        borderRadius: BorderRadius.circular(4),
                       ),
-                      onChanged: _updateTemplate,
+                      child: SingleChildScrollView(
+                        child: TextField(
+                          controller: templateController,
+                          maxLines: null,
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.all(8),
+                            hintText: '输入模板，使用 {变量名} 作为占位符',
+                          ),
+                          onChanged: _updateTemplate,
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 16),
                     Row(
@@ -403,12 +412,15 @@ class _PromptEditorHomeState extends State<PromptEditorHome> {
                     const Text('生成结果:', style: TextStyle(fontSize: 16)),
                     Container(
                       width: double.infinity,
-                      padding: const EdgeInsets.all(8.0),
+                      height: 150, // 固定高度，与模板输入区域一致
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(4),
                       ),
-                      child: Text(_renderResult()),
+                      child: SingleChildScrollView(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(_renderResult()),
+                      ),
                     ),
                     const SizedBox(height: 8),
                     ElevatedButton.icon(
